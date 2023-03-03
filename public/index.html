@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <title>Primera clase de Express</title>
+  <style>
+    h1, h2 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar is-primary">
+    <!-- navbar brand, navbar menu... -->
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <h1 class="title is-4">Movies</h1>
+      </a>
+      <div id="drop-down" class="navbar-item has-dropdown">
+        <a class="navbar-link">
+          Docs
+        </a>
+    
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/form">
+            Formulario
+          </a>                    
+          <hr class="navbar-divider">
+          <div class="navbar-item">
+            Version 0.9.4
+          </div>
+        </div>
+      </div>
+  </nav>
+  <main class="container">
+    <h1 class="title">Movies</h1>
+    <div id="movies"></div>
+  </main>    
+    <script>
+      const data = fetch('/api/v1/movies')
+        .then(response => response.json())
+        .then(data => {
+            const movies = document.querySelector('#movies')
+            data.data.forEach(movie => {
+              const movieElement = document.createElement('div')
+              movieElement.style = "margin: 10px"
+                movieElement.innerHTML = `
+                    <h2 style="margin: 0;" class="subtitle is-4">${movie.title}</h2>
+                    <p>${movie.description}</p>
+                `
+                movies.appendChild(movieElement)
+            })
+        })
+
+        const dropMenu = document.querySelector('#drop-down')
+        dropMenu.addEventListener('click', () => {
+          dropMenu.classList.toggle('is-active')
+        })
+
+    </script>
+</body>
+</html>
